@@ -1,0 +1,749 @@
+/* ============================================================
+   CSS CUSTOM PROPERTIES (design tokens)
+   All colours and fonts defined once here for easy changes
+   ============================================================ */
+:root {
+  --red:           hsl(356, 100%, 66%);      /* primary CTA red */
+  --red-dark:      hsl(353, 100%, 62%);      /* header gradient start */
+  --red-deep:      hsl(344, 53%, 34%);       /* header gradient end */
+  --dark-blue:     hsl(208, 49%, 24%);       /* section headings */
+  --dark-black:    hsl(240, 10%, 16%);       /* footer bg, dark headings */
+  --body-text:     hsl(207, 13%, 34%);       /* paragraph text */
+  --light-text:    hsl(240, 2%, 79%);        /* footer links */
+  --white:         hsl(0, 0%, 100%);
+  --font-body:     'Overpass', sans-serif;
+  --font-ui:       'Ubuntu', sans-serif;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box; /* include padding/border in element width */
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth; /* smooth scrolling when clicking anchor links */
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--body-text);
+  line-height: 1.7;
+  overflow-x: hidden; /* prevent horizontal scroll on mobile */
+}
+
+a {
+  text-decoration: none; /* remove underlines from all links */
+  color: inherit;
+}
+
+ul {
+  list-style: none; /* remove bullet points from all lists */
+}
+
+img {
+  max-width: 100%; /* prevent images overflowing their containers */
+  display: block;
+}
+
+
+/* ============================================================
+   HEADER / HERO
+   Red curved background with nav and hero text
+   ============================================================ */
+.header {
+  width: 100%;
+  min-height: 100vh;                        /* full viewport height */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2000' height='900'%3E%3Ccircle cx='900' cy='-200' r='900' fill='%23ff525d' opacity='0.5'/%3E%3C/svg%3E") no-repeat center / cover,
+              linear-gradient(135deg, var(--red-dark) 0%, var(--red-deep) 100%);
+  border-bottom-left-radius: 6rem;           /* signature curved bottom-left corner */
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 3rem 0 0;
+  position: relative;
+}
+
+/* Blogr logo */
+.logo {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--white);
+  letter-spacing: -1px;
+  flex-shrink: 0; /* stop logo from shrinking */
+}
+
+/* Hamburger button: hidden on desktop, shown on mobile */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: auto; /* push to right edge on mobile */
+}
+
+.hamburger-icon {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) invert(1); /* make icon white */
+}
+
+/* Nav menu: horizontal on desktop */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+}
+
+/* Each dropdown group */
+.nav-group {
+  position: relative; /* anchor for absolute dropdown panel */
+}
+
+/* Dropdown trigger button */
+.nav-toggle {
+  background: none;
+  border: none;
+  color: hsla(0, 0%, 100%, 0.75);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s;
+}
+
+.nav-toggle:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+/* Arrow rotates when dropdown is open */
+.arrow {
+  display: inline-block;
+  transition: transform 0.25s;
+  font-size: 0.7rem;
+}
+
+.nav-group.open .arrow {
+  transform: rotate(180deg); /* flip arrow up when open */
+}
+
+/* Dropdown panel */
+.dropdown {
+  display: none;                   /* hidden by default */
+  position: absolute;
+  top: calc(100% + 1rem);
+  left: 0;
+  background: var(--white);
+  border-radius: 0.4rem;
+  padding: 1.2rem 1.5rem;
+  min-width: 160px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+
+.nav-group.open .dropdown {
+  display: block; /* show when group has 'open' class (toggled by JS) */
+}
+
+.dropdown li a {
+  display: block;
+  padding: 0.4rem 0;
+  color: var(--dark-blue);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  transition: font-weight 0.1s;
+}
+
+.dropdown li a:hover {
+  font-weight: 700;
+}
+
+/* Auth buttons pushed to right end of navbar */
+.nav-auth {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.btn-login {
+  color: hsla(0, 0%, 100%, 0.85);
+  font-family: var(--font-ui);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.btn-login:hover {
+  color: var(--white);
+}
+
+/* Signup button: white pill with transparent background */
+.btn-signup {
+  background: var(--white);
+  color: var(--red);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-signup:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+
+/* ============================================================
+   HERO TEXT
+   ============================================================ */
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 1rem 8rem;
+  color: var(--white);
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem); /* fluid font size */
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  font-weight: 300;
+  max-width: 48ch;
+  opacity: 0.85;
+  margin-bottom: 2.5rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* "Start for Free" button: white bg, red text */
+.btn-start {
+  background: var(--white);
+  color: var(--red);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  padding: 0.85rem 2.2rem;
+  border-radius: 2rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-start:hover {
+  background: hsla(0, 0%, 100%, 0.2);
+  color: var(--white);
+}
+
+/* "Learn More" button: transparent bg, white border */
+.btn-learn {
+  background: transparent;
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  padding: 0.85rem 2.2rem;
+  border-radius: 2rem;
+  border: 2px solid var(--white);
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-learn:hover {
+  background: var(--white);
+  color: var(--red);
+}
+
+
+/* ============================================================
+   SECTION: DESIGNED FOR THE FUTURE (white bg)
+   ============================================================ */
+.section-future {
+  padding: 8rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 600;
+  color: var(--dark-blue);
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+/* Two-column grid: text left, illustration right */
+.future-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.feature-block {
+  margin-bottom: 3rem;
+}
+
+.feature-block h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--dark-blue);
+  margin-bottom: 1rem;
+}
+
+.feature-block p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--body-text);
+}
+
+
+/* ============================================================
+   EDITOR MOCKUP ILLUSTRATION (CSS-drawn)
+   ============================================================ */
+.editor-mockup {
+  background: var(--white);
+  border-radius: 1rem;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.12);
+  overflow: hidden;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* Top bar with traffic-light dots */
+.mockup-bar {
+  background: #f0f0f0;
+  padding: 0.8rem 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%; /* circle */
+}
+
+.dot.red    { background: #ff5f57; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green  { background: #28c940; }
+
+.mockup-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+/* Simulated text lines */
+.mockup-line {
+  height: 10px;
+  background: #e8ecf0;
+  border-radius: 4px;
+}
+
+.mockup-line.long   { width: 100%; }
+.mockup-line.medium { width: 70%; }
+.mockup-line.short  { width: 45%; }
+
+/* Simulated image placeholder block */
+.mockup-img-placeholder {
+  height: 80px;
+  background: linear-gradient(135deg, #e8ecf0, #d0d8e0);
+  border-radius: 6px;
+  margin: 0.5rem 0;
+}
+
+
+/* ============================================================
+   SECTION: PHONES / DARK SECTION
+   ============================================================ */
+.section-phones {
+  background: linear-gradient(135deg, hsl(237, 17%, 21%) 0%, hsl(237, 23%, 32%) 100%);
+  border-top-right-radius: 6rem;    /* curved top-right corner */
+  border-bottom-left-radius: 6rem;  /* curved bottom-left corner */
+  padding: 8rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Light text for dark background */
+.feature-block.light h3 {
+  color: var(--white);
+}
+
+.feature-block.light p {
+  color: hsla(0, 0%, 100%, 0.75);
+}
+
+
+/* ============================================================
+   PHONE ILLUSTRATION (CSS-drawn)
+   ============================================================ */
+.phones-illustration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone-outer {
+  width: 200px;
+  height: 380px;
+  background: linear-gradient(160deg, hsl(237, 23%, 40%), hsl(237, 17%, 28%));
+  border-radius: 2rem;
+  border: 3px solid hsla(0, 0%, 100%, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+}
+
+.phone-screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.phone-line {
+  height: 8px;
+  background: hsla(0, 0%, 100%, 0.2);
+  border-radius: 4px;
+  width: 100%;
+}
+
+.phone-line.short { width: 60%; }
+
+.phone-block {
+  height: 60px;
+  background: hsla(0, 0%, 100%, 0.1);
+  border-radius: 6px;
+  margin: 0.5rem 0;
+}
+
+
+/* ============================================================
+   SECTION: INFRASTRUCTURE (white bg)
+   ============================================================ */
+.section-infra {
+  padding: 8rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.infra-text h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 600;
+  color: var(--dark-blue);
+  margin-bottom: 1.5rem;
+}
+
+.infra-text p {
+  color: var(--body-text);
+  line-height: 1.8;
+}
+
+
+/* ============================================================
+   INFRASTRUCTURE CIRCLE ILLUSTRATION (CSS-drawn)
+   ============================================================ */
+.infra-illustration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Nested concentric circles */
+.infra-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* perfect circle */
+  position: relative;
+}
+
+.infra-circle.outer {
+  width: 300px;
+  height: 300px;
+  background: hsla(208, 49%, 24%, 0.05);
+  border: 1px solid hsla(208, 49%, 24%, 0.1);
+}
+
+.infra-circle.middle {
+  width: 210px;
+  height: 210px;
+  background: hsla(208, 49%, 24%, 0.08);
+  border: 1px solid hsla(208, 49%, 24%, 0.12);
+}
+
+.infra-circle.inner {
+  width: 130px;
+  height: 130px;
+  background: var(--dark-blue);
+  position: relative;
+}
+
+/* Small dot nodes on the inner circle */
+.infra-dot {
+  width: 16px;
+  height: 16px;
+  background: var(--white);
+  border-radius: 50%;
+  border: 3px solid var(--dark-blue);
+  position: absolute;
+}
+
+.infra-dot.top    { top: -8px;   left: 50%; transform: translateX(-50%); }
+.infra-dot.right  { right: -8px; top: 50%;  transform: translateY(-50%); }
+.infra-dot.bottom { bottom: -8px; left: 50%; transform: translateX(-50%); }
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background: var(--dark-black);
+  border-top-right-radius: 6rem; /* curved top-right corner */
+  padding: 5rem 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 6rem;
+  flex-wrap: wrap;
+}
+
+/* Footer Blogr logo */
+.footer-logo {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: var(--white);
+  letter-spacing: -1px;
+}
+
+/* Footer link columns side by side */
+.footer-links {
+  display: flex;
+  gap: 6rem;
+  flex-wrap: wrap;
+}
+
+.footer-col h4 {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+
+.footer-col ul li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-col ul li a {
+  color: var(--light-text);
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.footer-col ul li a:hover {
+  color: var(--white);
+}
+
+
+/* ============================================================
+   MOBILE RESPONSIVE STYLES
+   Breakpoint: 768px and below
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* Show hamburger button on mobile */
+  .hamburger {
+    display: block;
+  }
+
+  /* Stack nav vertically; hidden by default on mobile */
+  .nav-menu {
+    display: none;             /* hidden until hamburger clicked */
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--white);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    position: absolute;
+    top: calc(100% + 1rem);   /* drop below the navbar */
+    left: 0;
+    right: 0;
+    z-index: 200;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    gap: 0;
+  }
+
+  /* When JS adds 'open' class, show the menu */
+  .nav-menu.open {
+    display: flex;
+  }
+
+  /* Each nav group takes full width */
+  .nav-group {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding: 0.75rem 0;
+  }
+
+  .nav-toggle {
+    color: var(--dark-blue);
+    font-weight: 700;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Mobile dropdown: static, centred, light background */
+  .dropdown {
+    position: static;         /* remove absolute positioning */
+    box-shadow: none;
+    background: hsla(240, 10%, 16%, 0.05);
+    border-radius: 0.4rem;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  /* Auth buttons centred and stacked on mobile */
+  .nav-auth {
+    margin-left: 0;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+  }
+
+  .btn-login {
+    color: var(--dark-blue);
+  }
+
+  /* Signup button with gradient on mobile */
+  .btn-signup {
+    background: linear-gradient(135deg, var(--red-dark), var(--red-deep));
+    color: var(--white);
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Hero text smaller on mobile */
+  .hero {
+    padding: 4rem 1rem 6rem;
+  }
+
+  /* Single column layout on mobile for all grid sections */
+  .future-grid,
+  .section-phones,
+  .section-infra {
+    grid-template-columns: 1fr;
+  }
+
+  /* Move illustration below text on mobile */
+  .future-illustration {
+    order: -1; /* push illustration to top on mobile */
+  }
+
+  /* Reduce section padding on mobile */
+  .section-future,
+  .section-infra {
+    padding: 5rem 1.5rem;
+  }
+
+  .section-phones {
+    padding: 5rem 1.5rem;
+  }
+
+  /* Footer stacks vertically on mobile */
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+
+}
+
+
+/* ============================================================
+   TABLET RESPONSIVE STYLES
+   Breakpoint: 769px to 1024px
+   ============================================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Slightly narrower nav gap on tablets */
+  .navbar {
+    gap: 1.5rem;
+  }
+
+  /* Reduce section padding on tablets */
+  .section-future,
+  .section-infra {
+    padding: 6rem 3rem;
+  }
+
+  .section-phones {
+    padding: 6rem 3rem;
+  }
+
+  /* Reduce gap between grid columns on tablets */
+  .future-grid,
+  .section-phones,
+  .section-infra {
+    gap: 2.5rem;
+  }
+
+  /* Smaller footer gap on tablets */
+  .footer {
+    gap: 3rem;
+  }
+
+  .footer-links {
+    gap: 3rem;
+  }
+}
