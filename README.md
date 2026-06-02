@@ -7,7 +7,7 @@ A solution to the [Blogr Landing Page Challenge](https://www.frontendmentor.io/c
 **FULL NAME:** Raheem Bolanle  
 **MATRIC NUMBER:** 21/15Ca302  
 **EMAIL ADDRESS:** Raheembolanle92@gmail.com  
-**LIVE PROJECT LINK:** *(add your Netlify link here after deployment)*  
+**LIVE PROJECT LINK:**https://phenomenal-duckanoo-18c81b.netlify.app/ 
 **GITHUB REPOSITORY LINK:** https://github.com/Unicurl49/blogr-landing-page
 
 ---
