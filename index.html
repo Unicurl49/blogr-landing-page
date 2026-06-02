@@ -1,86 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png"/>
   <title>Blogr | A Modern Publishing Platform</title>
-
-  <!-- Google Fonts: Overpass for body/headings, Ubuntu for nav/buttons -->
+  <!-- Google Fonts: Overpass for headings/body, Ubuntu for nav/buttons -->
   <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;600&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet"/>
-
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 
-  <!-- ===================== HEADER / HERO ===================== -->
+  <!-- ===== HEADER: nav + hero on red gradient background ===== -->
   <header class="header">
 
-    <!-- Top navigation bar -->
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
 
-      <!-- Blogr logo text -->
-      <a href="#" class="logo">Blogr</a>
+      <!-- Blogr logo SVG -->
+      <a href="#" class="logo" aria-label="Blogr home">
+        <img src="./images/logo.svg" alt="Blogr"/>
+      </a>
 
-      <!-- Hamburger button shown only on mobile -->
-      <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
-        <img src="https://www.svgrepo.com/show/506800/hamburger-menu.svg" alt="menu" class="hamburger-icon" id="hamburgerIcon"/>
+      <!-- Hamburger button: visible on mobile only -->
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <img src="./images/icon-hamburger.svg" alt="" class="icon-open" id="iconOpen"/>
+        <img src="./images/icon-close.svg" alt="" class="icon-close" id="iconClose"/>
       </button>
 
-      <!-- Main navigation links (desktop always visible, mobile toggled) -->
-      <div class="nav-menu" id="navMenu">
+      <!-- Main nav menu: horizontal on desktop, dropdown overlay on mobile -->
+      <div class="nav-menu" id="navMenu" role="menu">
 
         <!-- Product dropdown -->
         <div class="nav-group">
-          <button class="nav-toggle" aria-expanded="false">
-            Product <span class="arrow">&#x25BE;</span>
+          <button class="nav-toggle" aria-expanded="false" aria-haspopup="true">
+            Product
+            <img src="./images/icon-arrow-light.svg" alt="" class="arrow-icon"/>
           </button>
-          <ul class="dropdown">
-            <li><a href="#">Overview</a></li>
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">Marketplace</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Integrations</a></li>
+          <ul class="dropdown" role="menu">
+            <li role="menuitem"><a href="#">Overview</a></li>
+            <li role="menuitem"><a href="#">Pricing</a></li>
+            <li role="menuitem"><a href="#">Marketplace</a></li>
+            <li role="menuitem"><a href="#">Features</a></li>
+            <li role="menuitem"><a href="#">Integrations</a></li>
           </ul>
         </div>
 
         <!-- Company dropdown -->
         <div class="nav-group">
-          <button class="nav-toggle" aria-expanded="false">
-            Company <span class="arrow">&#x25BE;</span>
+          <button class="nav-toggle" aria-expanded="false" aria-haspopup="true">
+            Company
+            <img src="./images/icon-arrow-light.svg" alt="" class="arrow-icon"/>
           </button>
-          <ul class="dropdown">
-            <li><a href="#">About</a></li>
-            <li><a href="#">Team</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Careers</a></li>
+          <ul class="dropdown" role="menu">
+            <li role="menuitem"><a href="#">About</a></li>
+            <li role="menuitem"><a href="#">Team</a></li>
+            <li role="menuitem"><a href="#">Blog</a></li>
+            <li role="menuitem"><a href="#">Careers</a></li>
           </ul>
         </div>
 
         <!-- Connect dropdown -->
         <div class="nav-group">
-          <button class="nav-toggle" aria-expanded="false">
-            Connect <span class="arrow">&#x25BE;</span>
+          <button class="nav-toggle" aria-expanded="false" aria-haspopup="true">
+            Connect
+            <img src="./images/icon-arrow-light.svg" alt="" class="arrow-icon"/>
           </button>
-          <ul class="dropdown">
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Newsletter</a></li>
-            <li><a href="#">LinkedIn</a></li>
+          <ul class="dropdown" role="menu">
+            <li role="menuitem"><a href="#">Contact</a></li>
+            <li role="menuitem"><a href="#">Newsletter</a></li>
+            <li role="menuitem"><a href="#">LinkedIn</a></li>
           </ul>
         </div>
 
-        <!-- Auth buttons (inside mobile menu, outside on desktop via CSS) -->
+        <!-- Auth buttons -->
         <div class="nav-auth">
           <a href="#" class="btn-login">Login</a>
           <a href="#" class="btn-signup">Sign Up</a>
         </div>
 
-      </div><!-- end nav-menu -->
+      </div>
+    </nav>
 
-    </nav><!-- end navbar -->
-
-    <!-- Hero text block -->
+    <!-- Hero section -->
     <div class="hero">
-      <h1>A Modern Publishing Platform</h1>
+      <h1>A modern publishing platform</h1>
       <p>Grow your audience and build your online brand wherever your readers come from.</p>
       <div class="hero-buttons">
         <a href="#" class="btn-start">Start for Free</a>
@@ -88,130 +91,99 @@
       </div>
     </div>
 
-  </header><!-- end header -->
+  </header>
 
 
-  <!-- ===================== SECTION 1: DESIGNED FOR THE FUTURE ===================== -->
-  <section class="section-future">
-
+  <!-- ===== SECTION 1: DESIGNED FOR THE FUTURE ===== -->
+  <section class="section-future" aria-label="Designed for the future">
     <h2 class="section-title">Designed for the future</h2>
 
-    <!-- Two-column layout: text left, illustration right -->
     <div class="future-grid">
 
-      <!-- Left: feature text blocks -->
+      <!-- Left: feature text -->
       <div class="future-text">
-
-        <div class="feature-block">
+        <article class="feature-block">
           <h3>Introducing an extensible editor</h3>
           <p>Blogr features an exceedingly intuitive interface which lets you focus on one thing: creating content. The editor supports management of multiple blogs and allows easy manipulation of embeds such as images, videos, and Markdown. Extensibility with plugins and themes provide easy ways to add functionality or change the looks of a blog.</p>
-        </div>
+        </article>
 
-        <div class="feature-block">
+        <article class="feature-block">
           <h3>Robust content management</h3>
           <p>Flexible content management enables users to easily move through posts. Increase the usability of your blog by adding customized categories, sections, format, or flow. With this functionality, you're in full control.</p>
-        </div>
-
+        </article>
       </div>
 
-      <!-- Right: SVG illustration (editor screen mockup built with CSS shapes) -->
+      <!-- Right: official editor illustration -->
       <div class="future-illustration">
-        <div class="editor-mockup">
-          <div class="mockup-bar">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-          </div>
-          <div class="mockup-body">
-            <div class="mockup-line long"></div>
-            <div class="mockup-line medium"></div>
-            <div class="mockup-line short"></div>
-            <div class="mockup-line long"></div>
-            <div class="mockup-line medium"></div>
-            <div class="mockup-img-placeholder"></div>
-            <div class="mockup-line short"></div>
-            <div class="mockup-line long"></div>
-          </div>
-        </div>
+        <!-- Desktop illustration shown by default, mobile swapped via CSS -->
+        <img src="./images/illustration-editor-desktop.svg"
+             alt="Editor interface illustration"
+             class="illustration-desktop"/>
+        <img src="./images/illustration-editor-mobile.svg"
+             alt="Editor interface illustration"
+             class="illustration-mobile"/>
       </div>
 
     </div>
-
   </section>
 
 
-  <!-- ===================== SECTION 2: DARK PHONES SECTION ===================== -->
-  <section class="section-phones">
+  <!-- ===== SECTION 2: DARK PHONES SECTION ===== -->
+  <section class="section-phones" aria-label="Features overview">
 
-    <!-- Phone illustration built with CSS -->
+    <!-- Left: official phones illustration -->
     <div class="phones-illustration">
-      <div class="phone-outer">
-        <div class="phone-screen">
-          <div class="phone-line"></div>
-          <div class="phone-line short"></div>
-          <div class="phone-line"></div>
-          <div class="phone-line short"></div>
-          <div class="phone-block"></div>
-          <div class="phone-line"></div>
-        </div>
-      </div>
+      <img src="./images/illustration-phones.svg" alt="App shown on mobile phones"/>
     </div>
 
-    <!-- Right: three feature text blocks -->
+    <!-- Right: feature text blocks -->
     <div class="phones-text">
 
-      <div class="feature-block light">
+      <article class="feature-block light">
         <h3>Free, open, simple</h3>
-        <p>Blogr is a free and open source application backed by a large community of helpful developers. It supports features such as code syntax highlighting, RSS feeds, social media integration, third-party commenting tools, and works seamlessly with Google Analytics. The architecture of Blogr is guaranteed to be deterministic.</p>
-      </div>
+        <p>Blogr is a free and open source application backed by a large community of helpful developers. It supports features such as code syntax highlighting, RSS feeds, social media integration, third-party commenting tools, and works seamlessly with Google Analytics. The architecture is clean and is relatively easy to learn.</p>
+      </article>
 
-      <div class="feature-block light">
+      <article class="feature-block light">
         <h3>Powerful tooling</h3>
         <p>Batteries included. We built a simple and straightforward CLI tool that makes customization and deployment a breeze, but capable of producing even the most complicated sites.</p>
-      </div>
-
-      <div class="feature-block light">
-        <h3>Designed for the future</h3>
-        <p>Blogr is designed with future technologies in mind. It's built to last, using the latest web standards. This makes it easy to keep your blog up to date and secure.</p>
-      </div>
+      </article>
 
     </div>
-
   </section>
 
 
-  <!-- ===================== SECTION 3: INFRASTRUCTURE ===================== -->
-  <section class="section-infra">
+  <!-- ===== SECTION 3: INFRASTRUCTURE ===== -->
+  <section class="section-infra" aria-label="Infrastructure">
 
-    <!-- Left: SVG-style circular illustration -->
+    <!-- Left: official laptop illustration -->
     <div class="infra-illustration">
-      <div class="infra-circle outer">
-        <div class="infra-circle middle">
-          <div class="infra-circle inner">
-            <div class="infra-dot top"></div>
-            <div class="infra-dot right"></div>
-            <div class="infra-dot bottom"></div>
-          </div>
-        </div>
-      </div>
+      <img src="./images/illustration-laptop-desktop.svg"
+           alt="Laptop showing infrastructure dashboard"
+           class="illustration-desktop"/>
+      <img src="./images/illustration-laptop-mobile.svg"
+           alt="Laptop showing infrastructure dashboard"
+           class="illustration-mobile"/>
     </div>
 
     <!-- Right: text -->
     <div class="infra-text">
-      <h2>State of the Art Infrastructure</h2>
-      <p>With reliability and speed in mind, worldwide data centres provide the backbone operations that keep your sites and apps running. Our guarantee is 99.9% uptime. We maintain redundant servers around the world to keep your content highly available.</p>
+      <article class="feature-block">
+        <h3>State of the Art Infrastructure</h3>
+        <p>With reliability and speed in mind, worldwide data centers provide the backbone for ultra-fast connectivity. This ensures your site will load instantly, no matter where your readers are, keeping your site competitive.</p>
+      </article>
     </div>
 
   </section>
 
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="footer">
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" role="contentinfo">
 
-    <!-- Logo -->
-    <div class="footer-logo">Blogr</div>
+    <div class="footer-logo">
+      <img src="./images/logo.svg" alt="Blogr"/>
+    </div>
 
-    <!-- Four columns of links -->
     <div class="footer-links">
 
       <div class="footer-col">
@@ -245,6 +217,11 @@
       </div>
 
     </div>
+
+    <p class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank" rel="noopener">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/Unicurl49" target="_blank" rel="noopener">Raheem Bolanle</a>.
+    </p>
 
   </footer>
 

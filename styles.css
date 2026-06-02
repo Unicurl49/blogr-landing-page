@@ -1,68 +1,83 @@
 /* ============================================================
-   CSS CUSTOM PROPERTIES (design tokens)
-   All colours and fonts defined once here for easy changes
+   CSS CUSTOM PROPERTIES
+   Values taken directly from the official style-guide.md
    ============================================================ */
 :root {
-  --red:           hsl(356, 100%, 66%);      /* primary CTA red */
-  --red-dark:      hsl(353, 100%, 62%);      /* header gradient start */
-  --red-deep:      hsl(344, 53%, 34%);       /* header gradient end */
-  --dark-blue:     hsl(208, 49%, 24%);       /* section headings */
-  --dark-black:    hsl(240, 10%, 16%);       /* footer bg, dark headings */
-  --body-text:     hsl(207, 13%, 34%);       /* paragraph text */
-  --light-text:    hsl(240, 2%, 79%);        /* footer links */
-  --white:         hsl(0, 0%, 100%);
-  --font-body:     'Overpass', sans-serif;
-  --font-ui:       'Ubuntu', sans-serif;
+  /* Primary colours */
+  --red-500:      hsl(356, 100%, 66%);   /* CTA button colour */
+  --red-400:      hsl(355, 100%, 74%);   /* hover tint */
+  --blue-900:     hsl(208, 49%, 24%);    /* headings */
+
+  /* Neutral colours */
+  --white:        hsl(0, 100%, 100%);
+  --gray-600:     hsl(207, 13%, 34%);    /* body text */
+  --gray-900:     hsl(240, 10%, 16%);    /* footer bg, dark headings */
+
+  /* Header gradient: orange to red */
+  --grad-orange:  hsl(13, 100%, 72%);
+  --grad-red:     hsl(353, 100%, 62%);
+
+  /* Dark section gradient: purple tones */
+  --grad-purple-dark:  hsl(237, 17%, 21%);
+  --grad-purple-mid:   hsl(237, 23%, 31%);
+
+  /* Fonts */
+  --font-body: 'Overpass', sans-serif;   /* headings and body copy */
+  --font-ui:   'Ubuntu', sans-serif;     /* nav and buttons */
 }
 
 /* ============================================================
    RESET & BASE
    ============================================================ */
 *, *::before, *::after {
-  box-sizing: border-box; /* include padding/border in element width */
+  box-sizing: border-box; /* padding and border count within element width */
   margin: 0;
   padding: 0;
 }
 
 html {
-  scroll-behavior: smooth; /* smooth scrolling when clicking anchor links */
+  font-size: 16px;        /* base font size from style guide */
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-body);
-  color: var(--body-text);
-  line-height: 1.7;
-  overflow-x: hidden; /* prevent horizontal scroll on mobile */
+  font-size: 1rem;
+  color: var(--gray-600);
+  line-height: 1.75;
+  overflow-x: hidden;     /* prevent horizontal scroll on mobile */
 }
 
 a {
-  text-decoration: none; /* remove underlines from all links */
+  text-decoration: none;
   color: inherit;
 }
 
 ul {
-  list-style: none; /* remove bullet points from all lists */
+  list-style: none;
 }
 
 img {
-  max-width: 100%; /* prevent images overflowing their containers */
+  max-width: 100%;
   display: block;
 }
 
 
 /* ============================================================
-   HEADER / HERO
-   Red curved background with nav and hero text
+   HEADER
+   Red-to-orange gradient with decorative SVG background pattern
+   Curved bottom-left corner is the signature design element
    ============================================================ */
 .header {
-  width: 100%;
-  min-height: 100vh;                        /* full viewport height */
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2000' height='900'%3E%3Ccircle cx='900' cy='-200' r='900' fill='%23ff525d' opacity='0.5'/%3E%3C/svg%3E") no-repeat center / cover,
-              linear-gradient(135deg, var(--red-dark) 0%, var(--red-deep) 100%);
-  border-bottom-left-radius: 6rem;           /* signature curved bottom-left corner */
-  padding: 0 2rem;
+  background:
+    url('./images/bg-pattern-intro-desktop.svg') no-repeat center center,
+    linear-gradient(135deg, var(--grad-orange), var(--grad-red));
+  background-size: 165%, cover; /* pattern larger than container for artistic overlap */
+  border-bottom-left-radius: 6rem;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 0 10rem;
 }
 
 
@@ -72,19 +87,15 @@ img {
 .navbar {
   display: flex;
   align-items: center;
-  gap: 3rem;
-  padding: 3rem 0 0;
-  position: relative;
+  gap: 4rem;
+  padding: 3.5rem 0 0;
+  position: relative; /* anchor for mobile dropdown positioning */
 }
 
-/* Blogr logo */
-.logo {
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 2rem;
-  color: var(--white);
-  letter-spacing: -1px;
-  flex-shrink: 0; /* stop logo from shrinking */
+/* Blogr logo image */
+.logo img {
+  height: 32px;
+  width: auto;
 }
 
 /* Hamburger button: hidden on desktop, shown on mobile */
@@ -93,16 +104,19 @@ img {
   background: none;
   border: none;
   cursor: pointer;
-  margin-left: auto; /* push to right edge on mobile */
+  margin-left: auto; /* push to right edge */
+  padding: 0.5rem;
 }
 
-.hamburger-icon {
-  width: 32px;
-  height: 32px;
-  filter: brightness(0) invert(1); /* make icon white */
-}
+/* Only one icon visible at a time (open vs close) */
+.hamburger .icon-open  { display: block; }
+.hamburger .icon-close { display: none; }
 
-/* Nav menu: horizontal on desktop */
+/* When hamburger has open state, swap icons */
+.hamburger.is-open .icon-open  { display: none; }
+.hamburger.is-open .icon-close { display: block; }
+
+/* Nav menu: horizontal row on desktop */
 .nav-menu {
   display: flex;
   align-items: center;
@@ -110,9 +124,12 @@ img {
   flex: 1;
 }
 
-/* Each dropdown group */
+
+/* ============================================================
+   DROPDOWN GROUPS
+   ============================================================ */
 .nav-group {
-  position: relative; /* anchor for absolute dropdown panel */
+  position: relative; /* anchor the dropdown panel */
 }
 
 /* Dropdown trigger button */
@@ -121,13 +138,14 @@ img {
   border: none;
   color: hsla(0, 0%, 100%, 0.75);
   font-family: var(--font-ui);
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  transition: color 0.2s;
+  gap: 0.5rem;
+  padding: 0;
+  transition: color 0.2s ease;
 }
 
 .nav-toggle:hover {
@@ -135,41 +153,43 @@ img {
   text-decoration: underline;
 }
 
-/* Arrow rotates when dropdown is open */
-.arrow {
-  display: inline-block;
-  transition: transform 0.25s;
-  font-size: 0.7rem;
+/* Arrow icon rotates when dropdown is open */
+.arrow-icon {
+  width: 10px;
+  height: auto;
+  transition: transform 0.25s ease;
 }
 
-.nav-group.open .arrow {
-  transform: rotate(180deg); /* flip arrow up when open */
+.nav-group.open .arrow-icon {
+  transform: rotate(180deg); /* flip upward when open */
+  filter: brightness(0) invert(1); /* keep white on dark bg */
 }
 
-/* Dropdown panel */
+/* Dropdown panel: hidden until .open is added by JS */
 .dropdown {
-  display: none;                   /* hidden by default */
+  display: none;
   position: absolute;
-  top: calc(100% + 1rem);
+  top: calc(100% + 1.2rem);
   left: 0;
   background: var(--white);
-  border-radius: 0.4rem;
-  padding: 1.2rem 1.5rem;
-  min-width: 160px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  z-index: 100;
+  border-radius: 0.3rem;
+  padding: 1.5rem 2rem;
+  min-width: 170px;
+  box-shadow: 0 20px 40px hsla(0, 0%, 0%, 0.2);
+  z-index: 500;
 }
 
 .nav-group.open .dropdown {
-  display: block; /* show when group has 'open' class (toggled by JS) */
+  display: block; /* JS toggles .open class on .nav-group */
 }
 
 .dropdown li a {
   display: block;
-  padding: 0.4rem 0;
-  color: var(--dark-blue);
+  padding: 0.35rem 0;
+  color: var(--gray-900);
   font-family: var(--font-ui);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 400;
   transition: font-weight 0.1s;
 }
 
@@ -177,18 +197,18 @@ img {
   font-weight: 700;
 }
 
-/* Auth buttons pushed to right end of navbar */
+/* Auth buttons pushed to the far right of the navbar */
 .nav-auth {
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .btn-login {
   color: hsla(0, 0%, 100%, 0.85);
   font-family: var(--font-ui);
-  font-weight: 500;
+  font-weight: 700;
   transition: color 0.2s;
 }
 
@@ -196,25 +216,25 @@ img {
   color: var(--white);
 }
 
-/* Signup button: white pill with transparent background */
+/* Sign Up: white pill button */
 .btn-signup {
   background: var(--white);
-  color: var(--red);
+  color: var(--red-500);
   font-family: var(--font-ui);
   font-weight: 700;
-  padding: 0.75rem 2rem;
+  padding: 0.8rem 2.2rem;
   border-radius: 2rem;
   transition: background 0.2s, color 0.2s;
 }
 
 .btn-signup:hover {
-  background: var(--red);
+  background: var(--red-400);
   color: var(--white);
 }
 
 
 /* ============================================================
-   HERO TEXT
+   HERO
    ============================================================ */
 .hero {
   flex: 1;
@@ -223,13 +243,14 @@ img {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 6rem 1rem 8rem;
   color: var(--white);
+  padding: 6rem 0 10rem;
 }
 
 .hero h1 {
-  font-size: clamp(2rem, 5vw, 3.5rem); /* fluid font size */
+  font-family: var(--font-body);
   font-weight: 600;
+  font-size: clamp(2rem, 4.5vw, 3.5rem); /* fluid: shrinks on small screens */
   line-height: 1.2;
   margin-bottom: 1.5rem;
 }
@@ -237,9 +258,9 @@ img {
 .hero p {
   font-size: 1.1rem;
   font-weight: 300;
-  max-width: 48ch;
-  opacity: 0.85;
-  margin-bottom: 2.5rem;
+  opacity: 0.9;
+  max-width: 52ch;
+  margin-bottom: 3rem;
 }
 
 .hero-buttons {
@@ -249,29 +270,29 @@ img {
   justify-content: center;
 }
 
-/* "Start for Free" button: white bg, red text */
+/* Start for Free: white bg, red text */
 .btn-start {
   background: var(--white);
-  color: var(--red);
+  color: var(--red-500);
   font-family: var(--font-ui);
   font-weight: 700;
-  padding: 0.85rem 2.2rem;
+  padding: 0.9rem 2.2rem;
   border-radius: 2rem;
   transition: background 0.2s, color 0.2s;
 }
 
 .btn-start:hover {
-  background: hsla(0, 0%, 100%, 0.2);
+  background: var(--red-400);
   color: var(--white);
 }
 
-/* "Learn More" button: transparent bg, white border */
+/* Learn More: transparent bg, white border */
 .btn-learn {
   background: transparent;
   color: var(--white);
   font-family: var(--font-ui);
   font-weight: 700;
-  padding: 0.85rem 2.2rem;
+  padding: 0.9rem 2.2rem;
   border-radius: 2rem;
   border: 2px solid var(--white);
   transition: background 0.2s, color 0.2s;
@@ -279,32 +300,32 @@ img {
 
 .btn-learn:hover {
   background: var(--white);
-  color: var(--red);
+  color: var(--red-500);
 }
 
 
 /* ============================================================
-   SECTION: DESIGNED FOR THE FUTURE (white bg)
+   SECTION: DESIGNED FOR THE FUTURE
+   White background, two-column: text left, illustration right
    ============================================================ */
 .section-future {
-  padding: 8rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 9rem 10rem;
+  overflow: hidden; /* illustration can bleed slightly without causing scroll */
 }
 
 .section-title {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 600;
-  color: var(--dark-blue);
+  color: var(--blue-900);
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
 }
 
-/* Two-column grid: text left, illustration right */
+/* Two-column grid */
 .future-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  gap: 2rem;
   align-items: center;
 }
 
@@ -312,257 +333,145 @@ img {
   margin-bottom: 3rem;
 }
 
+.feature-block:last-child {
+  margin-bottom: 0;
+}
+
 .feature-block h3 {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  color: var(--dark-blue);
+  color: var(--blue-900);
   margin-bottom: 1rem;
 }
 
 .feature-block p {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: var(--body-text);
+  font-weight: 300;
+  color: var(--gray-600);
+  line-height: 1.9;
 }
 
-
-/* ============================================================
-   EDITOR MOCKUP ILLUSTRATION (CSS-drawn)
-   ============================================================ */
-.editor-mockup {
-  background: var(--white);
-  border-radius: 1rem;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.12);
-  overflow: hidden;
-  max-width: 420px;
-  margin: 0 auto;
-}
-
-/* Top bar with traffic-light dots */
-.mockup-bar {
-  background: #f0f0f0;
-  padding: 0.8rem 1rem;
+/* Illustration: desktop version shown by default */
+.future-illustration {
   display: flex;
-  gap: 0.5rem;
+  justify-content: flex-end;
   align-items: center;
 }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%; /* circle */
+.future-illustration img {
+  width: 115%; /* let it bleed slightly right for the authentic Blogr look */
+  max-width: 750px;
 }
 
-.dot.red    { background: #ff5f57; }
-.dot.yellow { background: #ffbd2e; }
-.dot.green  { background: #28c940; }
-
-.mockup-body {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-
-/* Simulated text lines */
-.mockup-line {
-  height: 10px;
-  background: #e8ecf0;
-  border-radius: 4px;
-}
-
-.mockup-line.long   { width: 100%; }
-.mockup-line.medium { width: 70%; }
-.mockup-line.short  { width: 45%; }
-
-/* Simulated image placeholder block */
-.mockup-img-placeholder {
-  height: 80px;
-  background: linear-gradient(135deg, #e8ecf0, #d0d8e0);
-  border-radius: 6px;
-  margin: 0.5rem 0;
-}
+/* Show/hide desktop vs mobile illustrations */
+.illustration-mobile  { display: none; }
+.illustration-desktop { display: block; }
 
 
 /* ============================================================
-   SECTION: PHONES / DARK SECTION
+   SECTION: PHONES / DARK BACKGROUND
+   Purple gradient, illustration left, text right
+   Curved top-right and bottom-left corners
    ============================================================ */
 .section-phones {
-  background: linear-gradient(135deg, hsl(237, 17%, 21%) 0%, hsl(237, 23%, 32%) 100%);
-  border-top-right-radius: 6rem;    /* curved top-right corner */
-  border-bottom-left-radius: 6rem;  /* curved bottom-left corner */
-  padding: 8rem 2rem;
+  background:
+    url('./images/bg-pattern-circles.svg') no-repeat left -6rem bottom -18rem,
+    linear-gradient(135deg, var(--grad-purple-dark), var(--grad-purple-mid));
+  border-top-right-radius: 6rem;
+  border-bottom-left-radius: 6rem;
+  padding: 7rem 10rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
-  max-width: 100%;
   overflow: hidden;
 }
 
-/* Light text for dark background */
+/* Phones illustration overflows upward (authentic design detail) */
+.phones-illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -10rem; /* pull image up to overlap the section above */
+}
+
+.phones-illustration img {
+  width: 100%;
+  max-width: 420px;
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.35));
+}
+
+/* White text on dark background */
 .feature-block.light h3 {
   color: var(--white);
 }
 
 .feature-block.light p {
-  color: hsla(0, 0%, 100%, 0.75);
+  color: hsla(0, 0%, 100%, 0.7);
 }
 
 
 /* ============================================================
-   PHONE ILLUSTRATION (CSS-drawn)
-   ============================================================ */
-.phones-illustration {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.phone-outer {
-  width: 200px;
-  height: 380px;
-  background: linear-gradient(160deg, hsl(237, 23%, 40%), hsl(237, 17%, 28%));
-  border-radius: 2rem;
-  border: 3px solid hsla(0, 0%, 100%, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 1.5rem 1rem;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-}
-
-.phone-screen {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.phone-line {
-  height: 8px;
-  background: hsla(0, 0%, 100%, 0.2);
-  border-radius: 4px;
-  width: 100%;
-}
-
-.phone-line.short { width: 60%; }
-
-.phone-block {
-  height: 60px;
-  background: hsla(0, 0%, 100%, 0.1);
-  border-radius: 6px;
-  margin: 0.5rem 0;
-}
-
-
-/* ============================================================
-   SECTION: INFRASTRUCTURE (white bg)
+   SECTION: INFRASTRUCTURE
+   White background, illustration left, text right
    ============================================================ */
 .section-infra {
-  padding: 8rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 9rem 10rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
+  overflow: hidden;
 }
 
-.infra-text h2 {
-  font-size: clamp(1.4rem, 3vw, 2rem);
+/* Laptop illustration bleeds left slightly */
+.infra-illustration {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.infra-illustration img {
+  width: 115%;
+  max-width: 750px;
+  margin-left: -10%; /* shift left to bleed authentically */
+}
+
+.infra-text h3 {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 600;
-  color: var(--dark-blue);
+  color: var(--blue-900);
   margin-bottom: 1.5rem;
 }
 
 .infra-text p {
-  color: var(--body-text);
-  line-height: 1.8;
+  font-weight: 300;
+  color: var(--gray-600);
+  line-height: 1.9;
 }
-
-
-/* ============================================================
-   INFRASTRUCTURE CIRCLE ILLUSTRATION (CSS-drawn)
-   ============================================================ */
-.infra-illustration {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Nested concentric circles */
-.infra-circle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%; /* perfect circle */
-  position: relative;
-}
-
-.infra-circle.outer {
-  width: 300px;
-  height: 300px;
-  background: hsla(208, 49%, 24%, 0.05);
-  border: 1px solid hsla(208, 49%, 24%, 0.1);
-}
-
-.infra-circle.middle {
-  width: 210px;
-  height: 210px;
-  background: hsla(208, 49%, 24%, 0.08);
-  border: 1px solid hsla(208, 49%, 24%, 0.12);
-}
-
-.infra-circle.inner {
-  width: 130px;
-  height: 130px;
-  background: var(--dark-blue);
-  position: relative;
-}
-
-/* Small dot nodes on the inner circle */
-.infra-dot {
-  width: 16px;
-  height: 16px;
-  background: var(--white);
-  border-radius: 50%;
-  border: 3px solid var(--dark-blue);
-  position: absolute;
-}
-
-.infra-dot.top    { top: -8px;   left: 50%; transform: translateX(-50%); }
-.infra-dot.right  { right: -8px; top: 50%;  transform: translateY(-50%); }
-.infra-dot.bottom { bottom: -8px; left: 50%; transform: translateX(-50%); }
 
 
 /* ============================================================
    FOOTER
+   Dark background, curved top-right corner
    ============================================================ */
 .footer {
-  background: var(--dark-black);
-  border-top-right-radius: 6rem; /* curved top-right corner */
-  padding: 5rem 2rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 6rem;
-  flex-wrap: wrap;
+  background: var(--gray-900);
+  border-top-right-radius: 6rem;
+  padding: 4.5rem 10rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: start;
 }
 
-/* Footer Blogr logo */
-.footer-logo {
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 1.8rem;
-  color: var(--white);
-  letter-spacing: -1px;
+.footer-logo img {
+  height: 32px;
+  width: auto;
 }
 
-/* Footer link columns side by side */
 .footer-links {
-  display: flex;
-  gap: 6rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
 }
 
 .footer-col h4 {
@@ -570,7 +479,7 @@ img {
   font-weight: 700;
   font-size: 0.95rem;
   color: var(--white);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .footer-col ul li {
@@ -578,8 +487,8 @@ img {
 }
 
 .footer-col ul li a {
-  color: var(--light-text);
-  font-size: 0.9rem;
+  color: hsl(240, 2%, 79%);
+  font-size: 0.95rem;
   transition: color 0.2s;
 }
 
@@ -587,163 +496,254 @@ img {
   color: var(--white);
 }
 
+/* Attribution line */
+.attribution {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 0.7rem;
+  color: hsl(240, 2%, 60%);
+  margin-top: 1rem;
+}
+
+.attribution a {
+  color: hsl(228, 45%, 60%);
+}
+
 
 /* ============================================================
-   MOBILE RESPONSIVE STYLES
-   Breakpoint: 768px and below
+   MOBILE RESPONSIVE — 768px and below
    ============================================================ */
 @media (max-width: 768px) {
 
-  /* Show hamburger button on mobile */
+  /* Reduce header horizontal padding on mobile */
+  .header {
+    padding: 0 1.5rem;
+    background-image:
+      url('./images/bg-pattern-intro-mobile.svg'),
+      linear-gradient(135deg, var(--grad-orange), var(--grad-red));
+    background-size: 350%, cover;
+    background-position: center 34%, center;
+  }
+
+  .navbar {
+    padding: 2rem 0 0;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  /* Show hamburger on mobile */
   .hamburger {
     display: block;
   }
 
-  /* Stack nav vertically; hidden by default on mobile */
+  /* Mobile menu: full-width white card that drops below navbar */
   .nav-menu {
-    display: none;             /* hidden until hamburger clicked */
+    display: none;
     flex-direction: column;
     align-items: stretch;
     background: var(--white);
     border-radius: 0.5rem;
-    padding: 2rem;
-    position: absolute;
-    top: calc(100% + 1rem);   /* drop below the navbar */
-    left: 0;
-    right: 0;
-    z-index: 200;
+    padding: 2.5rem 1.5rem;
+    width: 100%;
+    margin-top: 1.5rem;
     box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    z-index: 300;
     gap: 0;
+    text-align: center;
   }
 
-  /* When JS adds 'open' class, show the menu */
+  /* JS adds .open to show the menu */
   .nav-menu.open {
     display: flex;
   }
 
-  /* Each nav group takes full width */
   .nav-group {
+    border-bottom: 1px solid hsl(240, 5%, 91%);
+    padding: 1rem 0;
     width: 100%;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-    padding: 0.75rem 0;
   }
 
+  /* Dark text in mobile menu */
   .nav-toggle {
-    color: var(--dark-blue);
+    color: var(--blue-900);
     font-weight: 700;
     justify-content: center;
     width: 100%;
   }
 
-  /* Mobile dropdown: static, centred, light background */
+  /* Dark arrows in mobile dropdown */
+  .nav-group .arrow-icon {
+    content: url('./images/icon-arrow-dark.svg');
+  }
+
+  /* Mobile dropdown: static, light background */
   .dropdown {
-    position: static;         /* remove absolute positioning */
+    position: static;
     box-shadow: none;
-    background: hsla(240, 10%, 16%, 0.05);
+    background: hsl(240, 5%, 94%);
     border-radius: 0.4rem;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
+    padding: 1rem 1.5rem;
     text-align: center;
   }
 
-  /* Auth buttons centred and stacked on mobile */
+  .dropdown li a {
+    color: var(--gray-900);
+    font-weight: 600;
+  }
+
+  /* Mobile auth: centred column with divider */
   .nav-auth {
     margin-left: 0;
     flex-direction: column;
     align-items: center;
-    padding-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid hsl(240, 5%, 91%);
+    width: 100%;
+    gap: 1rem;
   }
 
   .btn-login {
-    color: var(--dark-blue);
+    color: var(--blue-900);
+    font-family: var(--font-ui);
+    font-weight: 700;
   }
 
-  /* Signup button with gradient on mobile */
+  /* Mobile sign up: gradient background */
   .btn-signup {
-    background: linear-gradient(135deg, var(--red-dark), var(--red-deep));
+    background: linear-gradient(135deg, var(--grad-orange), var(--grad-red));
     color: var(--white);
-    width: 100%;
-    text-align: center;
+    padding: 0.8rem 3rem;
   }
 
-  /* Hero text smaller on mobile */
+  /* Hero smaller on mobile */
   .hero {
-    padding: 4rem 1rem 6rem;
+    padding: 5rem 0 8rem;
   }
 
-  /* Single column layout on mobile for all grid sections */
-  .future-grid,
-  .section-phones,
-  .section-infra {
-    grid-template-columns: 1fr;
+  .hero h1 {
+    font-size: 2rem;
   }
 
-  /* Move illustration below text on mobile */
-  .future-illustration {
-    order: -1; /* push illustration to top on mobile */
-  }
-
-  /* Reduce section padding on mobile */
+  /* All grid sections become single column on mobile */
   .section-future,
   .section-infra {
     padding: 5rem 1.5rem;
+    grid-template-columns: 1fr;
   }
 
   .section-phones {
-    padding: 5rem 1.5rem;
+    padding: 5rem 1.5rem 4rem;
+    grid-template-columns: 1fr;
   }
 
-  /* Footer stacks vertically on mobile */
+  .future-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  /* On mobile, illustration goes above text */
+  .future-illustration {
+    order: -1;
+    justify-content: center;
+  }
+
+  .future-illustration img {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Switch to mobile illustrations on small screens */
+  .illustration-mobile  { display: block; }
+  .illustration-desktop { display: none; }
+
+  /* Centre text on mobile */
+  .section-title {
+    margin-bottom: 3rem;
+  }
+
+  .feature-block {
+    text-align: center;
+  }
+
+  /* Phones illustration: no negative margin on mobile */
+  .phones-illustration {
+    margin-top: 0;
+    order: -1;
+  }
+
+  .phones-illustration img {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  /* Infra illustration full width on mobile */
+  .infra-illustration {
+    justify-content: center;
+  }
+
+  .infra-illustration img {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .infra-text {
+    text-align: center;
+  }
+
+  /* Footer single column on mobile */
   .footer {
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: 1fr;
+    padding: 4rem 1.5rem;
     text-align: center;
     gap: 3rem;
   }
 
-  .footer-links {
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
+  .footer-logo {
+    display: flex;
+    justify-content: center;
   }
 
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
 }
 
 
 /* ============================================================
-   TABLET RESPONSIVE STYLES
-   Breakpoint: 769px to 1024px
+   TABLET RESPONSIVE — 769px to 1199px
    ============================================================ */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1199px) {
 
-  /* Slightly narrower nav gap on tablets */
-  .navbar {
-    gap: 1.5rem;
-  }
-
-  /* Reduce section padding on tablets */
+  /* Reduce wide padding on tablets */
+  .header,
   .section-future,
   .section-infra {
-    padding: 6rem 3rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 
   .section-phones {
-    padding: 6rem 3rem;
+    padding: 6rem 4rem;
   }
 
-  /* Reduce gap between grid columns on tablets */
-  .future-grid,
-  .section-phones,
-  .section-infra {
-    gap: 2.5rem;
-  }
-
-  /* Smaller footer gap on tablets */
   .footer {
-    gap: 3rem;
+    padding: 4rem;
   }
 
-  .footer-links {
-    gap: 3rem;
+  /* Slightly less bleed on tablet */
+  .future-illustration img,
+  .infra-illustration img {
+    width: 100%;
+  }
+
+  .infra-illustration img {
+    margin-left: 0;
+  }
+
+  /* Phones illustration: less negative margin on tablet */
+  .phones-illustration {
+    margin-top: -6rem;
   }
 }
